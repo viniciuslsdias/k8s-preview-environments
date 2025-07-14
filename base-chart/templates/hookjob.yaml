@@ -1,0 +1,46 @@
+{{- range .Values.hookJobs -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "hook-{{ .name }}"
+  labels:
+    {{- include "base-chart.labels" $ | nindent 4 }}
+  {{- with .annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  backoffLimit: {{ .backoffLimit }}
+  template:
+    metadata:
+      labels:
+        {{- include "base-chart.labels" $ | nindent 8 }}
+    spec:
+      restartPolicy: Never
+      {{- with .imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: hook-container
+          image: "{{ .image.repository }}:{{ .image.tag }}"
+          {{- if or .env.plain .env.sealed }}
+          envFrom:
+            {{- if .env.plain }}
+            - configMapRef:
+                name: "hook-{{ .name }}"
+            {{- end }}
+            {{- if .env.sealed }}
+            - secretRef:
+                name: "hook-{{ .name }}"
+            {{- end }}
+          {{- end }}
+          {{- with .command }}
+          command:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .args }}
+          args:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+{{- end }}

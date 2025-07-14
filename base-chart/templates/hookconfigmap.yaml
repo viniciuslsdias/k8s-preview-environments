@@ -1,0 +1,18 @@
+{{- range .Values.hookJobs -}}
+{{- if .env.plain }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "hook-{{ .name }}"
+  labels:
+    {{- include "base-chart.labels" $ | nindent 4 }}
+  {{- with .env.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+data:
+  {{- range $key, $val := .env.plain }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+{{- end }}
+{{- end }}

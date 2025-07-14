@@ -1,0 +1,12 @@
+{{- if .Values.env.plain }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "base-chart.fullname" . }}-environments
+  labels:
+    {{- include "base-chart.labels" . | nindent 4 }}
+data:
+  {{- range $key, $val := .Values.env.plain }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+{{- end }}
