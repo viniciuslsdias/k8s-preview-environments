@@ -8,10 +8,9 @@ imagePullSecrets:
   - name: "ecr"
 
 env:
-  sealed: {}
-    # POSTGRES_PASSWORD: "postgres"
+  sealed:
+    POSTGRES_PASSWORD: "AgCuuz80SXDSob1g5O+DHPI+Tv9CBztIIJbdyEZaJ+L0SeVbpbVPdvtD1dwB0F1M+oj9WUqp4xA65fl3eTvX+06VlWZdBy+Edo58LveWLni/OEYJfAjvZ0T2o0dG2E41Sj7M8EhOgUj4lYGJ7DRcNb707H0r/hN/6hnJFXTaWzF0olCChTX3E4ygSsvaXKYm+Cj2pjk4R3ps5FfgK8oD2egdYl8UuRFwLuRWeY0r4fHp5DWBrDspzYIaJ6jNvnBkoh222l683iukGfsS6EzsF8sZ3OfuYjboKEPxKN7UCVentCxEnrRgBCVTYFm84JMzq2kZCDD0xH4uAPBHtUkHTaFCFQyGWJZB/v0y2SM3j3XhwZI3qMWw1gkLn4GE0TL9/PfF9YhXMOuk0RuM/LOZBWoijCt+UqiGWfeTYXY1mnIRpHGjUn1AHADdbPSdtuOHe+eG9C2DoPXh6IUxNJ5Uey26oFP/3I6uqa4/lOIP/rRhoLHyTBbyUos/VoV9S3w8oGsfWeR9hJsXucTjgFSmyShCX6b/3n03yv+1OX6OSWAicOAjWkhv3XAw2Ri/3mDte9Lx/LKe+EynlVfRKKG+LJCNEc9ZdG04iBcF8eo4DJdUfcdKwmdg3mix4FT3dNlr5QmQ67gag4n4l4CcYPMK5h15+KLWoLWDtBj+Ma/h6yyHXF4V2rSN3DyNP91trfz0vdvzhW/R9L1bqA=="
   plain:
-    POSTGRES_PASSWORD: "postgres"
     POSTGRES_HOST: "postgres"
     POSTGRES_PORT: 5432
     POSTGRES_DATABASE: "support-portal"
@@ -35,12 +34,13 @@ hookJobs:
         migrate -path=/migrations/ -database postgres://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}?sslmode=disable up
     env:
       annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
         "helm.sh/hook": pre-install,pre-upgrade
         "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
         "helm.sh/hook-weight": "3"
-      sealed: {}
+      sealed:
+        POSTGRES_PASSWORD: "AgCuuz80SXDSob1g5O+DHPI+Tv9CBztIIJbdyEZaJ+L0SeVbpbVPdvtD1dwB0F1M+oj9WUqp4xA65fl3eTvX+06VlWZdBy+Edo58LveWLni/OEYJfAjvZ0T2o0dG2E41Sj7M8EhOgUj4lYGJ7DRcNb707H0r/hN/6hnJFXTaWzF0olCChTX3E4ygSsvaXKYm+Cj2pjk4R3ps5FfgK8oD2egdYl8UuRFwLuRWeY0r4fHp5DWBrDspzYIaJ6jNvnBkoh222l683iukGfsS6EzsF8sZ3OfuYjboKEPxKN7UCVentCxEnrRgBCVTYFm84JMzq2kZCDD0xH4uAPBHtUkHTaFCFQyGWJZB/v0y2SM3j3XhwZI3qMWw1gkLn4GE0TL9/PfF9YhXMOuk0RuM/LOZBWoijCt+UqiGWfeTYXY1mnIRpHGjUn1AHADdbPSdtuOHe+eG9C2DoPXh6IUxNJ5Uey26oFP/3I6uqa4/lOIP/rRhoLHyTBbyUos/VoV9S3w8oGsfWeR9hJsXucTjgFSmyShCX6b/3n03yv+1OX6OSWAicOAjWkhv3XAw2Ri/3mDte9Lx/LKe+EynlVfRKKG+LJCNEc9ZdG04iBcF8eo4DJdUfcdKwmdg3mix4FT3dNlr5QmQ67gag4n4l4CcYPMK5h15+KLWoLWDtBj+Ma/h6yyHXF4V2rSN3DyNP91trfz0vdvzhW/R9L1bqA=="
       plain:
-        POSTGRES_PASSWORD: "postgres"
         POSTGRES_HOST: "postgres"
         POSTGRES_PORT: 5432
         POSTGRES_DATABASE: "support-portal"
@@ -60,12 +60,13 @@ hookJobs:
         psql postgres://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}?sslmode=disable -c 'CREATE DATABASE "support-portal-preview" WITH TEMPLATE "support-portal";'
     env:
       annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
         "helm.sh/hook": pre-install,pre-upgrade
         "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
         "helm.sh/hook-weight": "1"
-      sealed: {}
+      sealed:
+        POSTGRES_PASSWORD: "AgCuuz80SXDSob1g5O+DHPI+Tv9CBztIIJbdyEZaJ+L0SeVbpbVPdvtD1dwB0F1M+oj9WUqp4xA65fl3eTvX+06VlWZdBy+Edo58LveWLni/OEYJfAjvZ0T2o0dG2E41Sj7M8EhOgUj4lYGJ7DRcNb707H0r/hN/6hnJFXTaWzF0olCChTX3E4ygSsvaXKYm+Cj2pjk4R3ps5FfgK8oD2egdYl8UuRFwLuRWeY0r4fHp5DWBrDspzYIaJ6jNvnBkoh222l683iukGfsS6EzsF8sZ3OfuYjboKEPxKN7UCVentCxEnrRgBCVTYFm84JMzq2kZCDD0xH4uAPBHtUkHTaFCFQyGWJZB/v0y2SM3j3XhwZI3qMWw1gkLn4GE0TL9/PfF9YhXMOuk0RuM/LOZBWoijCt+UqiGWfeTYXY1mnIRpHGjUn1AHADdbPSdtuOHe+eG9C2DoPXh6IUxNJ5Uey26oFP/3I6uqa4/lOIP/rRhoLHyTBbyUos/VoV9S3w8oGsfWeR9hJsXucTjgFSmyShCX6b/3n03yv+1OX6OSWAicOAjWkhv3XAw2Ri/3mDte9Lx/LKe+EynlVfRKKG+LJCNEc9ZdG04iBcF8eo4DJdUfcdKwmdg3mix4FT3dNlr5QmQ67gag4n4l4CcYPMK5h15+KLWoLWDtBj+Ma/h6yyHXF4V2rSN3DyNP91trfz0vdvzhW/R9L1bqA=="
       plain:
-        POSTGRES_PASSWORD: "postgres"
         POSTGRES_HOST: "postgres"
         POSTGRES_PORT: 5432
         POSTGRES_DATABASE: "support-portal"
