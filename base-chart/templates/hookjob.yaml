@@ -1,4 +1,5 @@
-{{- range .Values.hookJobs -}}
+{{- range .Values.hookJobs }}
+---
 apiVersion: batch/v1
 kind: Job
 metadata:

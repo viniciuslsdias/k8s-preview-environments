@@ -1,0 +1,82 @@
+image:
+  repository: 194302643587.dkr.ecr.us-east-1.amazonaws.com/support-portal
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "8431693"
+
+imagePullSecrets:
+  - name: "ecr"
+
+env:
+  sealed: {}
+    # POSTGRES_PASSWORD: "postgres"
+  plain:
+    POSTGRES_PASSWORD: "postgres"
+    POSTGRES_HOST: "postgres"
+    POSTGRES_PORT: 5432
+    POSTGRES_DATABASE: "support-portal"
+    POSTGRES_USERNAME: "postgres"
+
+hookJobs:
+  - name: "migrations"
+    annotations:
+      "helm.sh/hook": pre-install,pre-upgrade
+      "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+      "helm.sh/hook-weight": "4"
+    image:
+      repository: 194302643587.dkr.ecr.us-east-1.amazonaws.com/support-portal
+      tag: "8431693-migrations"
+    imagePullSecrets:
+      - name: "ecr"
+    backoffLimit: 0
+    command: ["/bin/sh", "-c"]
+    args:
+      - >
+        migrate -path=/migrations/ -database postgres://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}?sslmode=disable up
+    env:
+      annotations:
+        "helm.sh/hook": pre-install,pre-upgrade
+        "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+        "helm.sh/hook-weight": "3"
+      sealed: {}
+      plain:
+        POSTGRES_PASSWORD: "postgres"
+        POSTGRES_HOST: "postgres"
+        POSTGRES_PORT: 5432
+        POSTGRES_DATABASE: "support-portal"
+        POSTGRES_USERNAME: "postgres"
+  - name: "db-template"
+    annotations:
+      "helm.sh/hook": pre-install,pre-upgrade
+      "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+      "helm.sh/hook-weight": "2"
+    image:
+      repository: postgres
+      tag: "latest"
+    backoffLimit: 0
+    command: ["/bin/bash", "-c"]
+    args:
+      - >
+        psql postgres://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}?sslmode=disable -c 'CREATE DATABASE "support-portal-preview" WITH TEMPLATE "support-portal";'
+    env:
+      annotations:
+        "helm.sh/hook": pre-install,pre-upgrade
+        "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+        "helm.sh/hook-weight": "1"
+      sealed: {}
+      plain:
+        POSTGRES_PASSWORD: "postgres"
+        POSTGRES_HOST: "postgres"
+        POSTGRES_PORT: 5432
+        POSTGRES_DATABASE: "support-portal"
+        POSTGRES_USERNAME: "postgres"
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: 8080
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: 8080

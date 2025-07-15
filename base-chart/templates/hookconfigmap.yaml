@@ -1,5 +1,6 @@
 {{- range .Values.hookJobs -}}
 {{- if .env.plain }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:

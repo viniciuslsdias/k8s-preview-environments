@@ -101,6 +101,7 @@ hookJobs: {}
   #   image:
   #     repository: ""
   #     tag: ""
+  #   imagePullSecrets: []
   #   backoffLimit: 0
   #   command: []
   #   args: []
