@@ -9,7 +9,7 @@ imagePullSecrets:
 
 env:
   sealed:
-    POSTGRES_PASSWORD: "AgCuuz80SXDSob1g5O+DHPI+Tv9CBztIIJbdyEZaJ+L0SeVbpbVPdvtD1dwB0F1M+oj9WUqp4xA65fl3eTvX+06VlWZdBy+Edo58LveWLni/OEYJfAjvZ0T2o0dG2E41Sj7M8EhOgUj4lYGJ7DRcNb707H0r/hN/6hnJFXTaWzF0olCChTX3E4ygSsvaXKYm+Cj2pjk4R3ps5FfgK8oD2egdYl8UuRFwLuRWeY0r4fHp5DWBrDspzYIaJ6jNvnBkoh222l683iukGfsS6EzsF8sZ3OfuYjboKEPxKN7UCVentCxEnrRgBCVTYFm84JMzq2kZCDD0xH4uAPBHtUkHTaFCFQyGWJZB/v0y2SM3j3XhwZI3qMWw1gkLn4GE0TL9/PfF9YhXMOuk0RuM/LOZBWoijCt+UqiGWfeTYXY1mnIRpHGjUn1AHADdbPSdtuOHe+eG9C2DoPXh6IUxNJ5Uey26oFP/3I6uqa4/lOIP/rRhoLHyTBbyUos/VoV9S3w8oGsfWeR9hJsXucTjgFSmyShCX6b/3n03yv+1OX6OSWAicOAjWkhv3XAw2Ri/3mDte9Lx/LKe+EynlVfRKKG+LJCNEc9ZdG04iBcF8eo4DJdUfcdKwmdg3mix4FT3dNlr5QmQ67gag4n4l4CcYPMK5h15+KLWoLWDtBj+Ma/h6yyHXF4V2rSN3DyNP91trfz0vdvzhW/R9L1bqA=="
+    POSTGRES_PASSWORD: "AgB/SyDfSmp3so+L0H26Z0wCpLVSXWkoEa6i9x/Lx6tz4UFYTBW8ZVYD02/Osy+Cisa+GqJGB8umty71dwsmjgDWPwVieJnlCQnt6iKEx3gCmqBd4jXnzWsoSS88A+Jjgq8iEAp0VECRqb9IwtS5g5hWDjz/t6eRcvDSvpKk7HhFcOhBexnELgxqpVwALb9iLP/MdUe3h4HAr+JB76AqkwQD4zxHMfHh2H+hmukxPokKyiVjiPVcOBRbnxi0e58qf2CWIrd3p/KNN3OdEvQo/otHs948V/QTwYaN0DqwwcpgkXTcF8R+d17B2ku31lEeKBxEy1MKydP50eR65+GFj3jJXkdPcaK2Gl3MwDk3NccIW+F1d1wzID6RM8h41REqb1gC4luGaKRquBadiSLINbO49ReeMkdmPrcK5zDHrHkOzlA/2BCGE1G/dGzk0tv+z68ykr/rgmdR/l0VYLkKqF+2BydVuHt7rW82wmh+FL931qy2aI0iozdlLN/7EOSl3dddgn5EO9TpkLmh6BVF2gzdHL2xFGPIL/wnCX341UVzqCseCYL0xhk8cFWiu2OiUQO7BPsaZS0YE80Lo5Yi41dtaqpNUnVFSTxPKkoKYUSZ+5BTCnJeMhWQYkEpKyiZq3+QoFqLH8aMAyqqlYqJDMabNzzGu0p+PDFOCwHpGoDNLmBdlG8WC5+N85ES+j8YFwP3P4Em3f3VOg=="
   plain:
     POSTGRES_HOST: "postgres"
     POSTGRES_PORT: 5432
@@ -21,7 +21,7 @@ hookJobs:
     annotations:
       "helm.sh/hook": pre-install,pre-upgrade
       "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
-      "helm.sh/hook-weight": "4"
+      "helm.sh/hook-weight": "2"
     image:
       repository: 194302643587.dkr.ecr.us-east-1.amazonaws.com/support-portal
       tag: "8431693-migrations"
@@ -37,9 +37,9 @@ hookJobs:
         sealedsecrets.bitnami.com/cluster-wide: "true"
         "helm.sh/hook": pre-install,pre-upgrade
         "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
-        "helm.sh/hook-weight": "3"
+        "helm.sh/hook-weight": "1"
       sealed:
-        POSTGRES_PASSWORD: "AgCuuz80SXDSob1g5O+DHPI+Tv9CBztIIJbdyEZaJ+L0SeVbpbVPdvtD1dwB0F1M+oj9WUqp4xA65fl3eTvX+06VlWZdBy+Edo58LveWLni/OEYJfAjvZ0T2o0dG2E41Sj7M8EhOgUj4lYGJ7DRcNb707H0r/hN/6hnJFXTaWzF0olCChTX3E4ygSsvaXKYm+Cj2pjk4R3ps5FfgK8oD2egdYl8UuRFwLuRWeY0r4fHp5DWBrDspzYIaJ6jNvnBkoh222l683iukGfsS6EzsF8sZ3OfuYjboKEPxKN7UCVentCxEnrRgBCVTYFm84JMzq2kZCDD0xH4uAPBHtUkHTaFCFQyGWJZB/v0y2SM3j3XhwZI3qMWw1gkLn4GE0TL9/PfF9YhXMOuk0RuM/LOZBWoijCt+UqiGWfeTYXY1mnIRpHGjUn1AHADdbPSdtuOHe+eG9C2DoPXh6IUxNJ5Uey26oFP/3I6uqa4/lOIP/rRhoLHyTBbyUos/VoV9S3w8oGsfWeR9hJsXucTjgFSmyShCX6b/3n03yv+1OX6OSWAicOAjWkhv3XAw2Ri/3mDte9Lx/LKe+EynlVfRKKG+LJCNEc9ZdG04iBcF8eo4DJdUfcdKwmdg3mix4FT3dNlr5QmQ67gag4n4l4CcYPMK5h15+KLWoLWDtBj+Ma/h6yyHXF4V2rSN3DyNP91trfz0vdvzhW/R9L1bqA=="
+        POSTGRES_PASSWORD: "AgB/SyDfSmp3so+L0H26Z0wCpLVSXWkoEa6i9x/Lx6tz4UFYTBW8ZVYD02/Osy+Cisa+GqJGB8umty71dwsmjgDWPwVieJnlCQnt6iKEx3gCmqBd4jXnzWsoSS88A+Jjgq8iEAp0VECRqb9IwtS5g5hWDjz/t6eRcvDSvpKk7HhFcOhBexnELgxqpVwALb9iLP/MdUe3h4HAr+JB76AqkwQD4zxHMfHh2H+hmukxPokKyiVjiPVcOBRbnxi0e58qf2CWIrd3p/KNN3OdEvQo/otHs948V/QTwYaN0DqwwcpgkXTcF8R+d17B2ku31lEeKBxEy1MKydP50eR65+GFj3jJXkdPcaK2Gl3MwDk3NccIW+F1d1wzID6RM8h41REqb1gC4luGaKRquBadiSLINbO49ReeMkdmPrcK5zDHrHkOzlA/2BCGE1G/dGzk0tv+z68ykr/rgmdR/l0VYLkKqF+2BydVuHt7rW82wmh+FL931qy2aI0iozdlLN/7EOSl3dddgn5EO9TpkLmh6BVF2gzdHL2xFGPIL/wnCX341UVzqCseCYL0xhk8cFWiu2OiUQO7BPsaZS0YE80Lo5Yi41dtaqpNUnVFSTxPKkoKYUSZ+5BTCnJeMhWQYkEpKyiZq3+QoFqLH8aMAyqqlYqJDMabNzzGu0p+PDFOCwHpGoDNLmBdlG8WC5+N85ES+j8YFwP3P4Em3f3VOg=="
       plain:
         POSTGRES_HOST: "postgres"
         POSTGRES_PORT: 5432
@@ -47,9 +47,9 @@ hookJobs:
         POSTGRES_USERNAME: "postgres"
   - name: "db-template"
     annotations:
-      "helm.sh/hook": pre-install,pre-upgrade
+      "helm.sh/hook": pre-install
       "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
-      "helm.sh/hook-weight": "2"
+      "helm.sh/hook-weight": "-1"
     image:
       repository: postgres
       tag: "latest"
@@ -61,11 +61,11 @@ hookJobs:
     env:
       annotations:
         sealedsecrets.bitnami.com/cluster-wide: "true"
-        "helm.sh/hook": pre-install,pre-upgrade
+        "helm.sh/hook": pre-install
         "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
-        "helm.sh/hook-weight": "1"
+        "helm.sh/hook-weight": "-2"
       sealed:
-        POSTGRES_PASSWORD: "AgCuuz80SXDSob1g5O+DHPI+Tv9CBztIIJbdyEZaJ+L0SeVbpbVPdvtD1dwB0F1M+oj9WUqp4xA65fl3eTvX+06VlWZdBy+Edo58LveWLni/OEYJfAjvZ0T2o0dG2E41Sj7M8EhOgUj4lYGJ7DRcNb707H0r/hN/6hnJFXTaWzF0olCChTX3E4ygSsvaXKYm+Cj2pjk4R3ps5FfgK8oD2egdYl8UuRFwLuRWeY0r4fHp5DWBrDspzYIaJ6jNvnBkoh222l683iukGfsS6EzsF8sZ3OfuYjboKEPxKN7UCVentCxEnrRgBCVTYFm84JMzq2kZCDD0xH4uAPBHtUkHTaFCFQyGWJZB/v0y2SM3j3XhwZI3qMWw1gkLn4GE0TL9/PfF9YhXMOuk0RuM/LOZBWoijCt+UqiGWfeTYXY1mnIRpHGjUn1AHADdbPSdtuOHe+eG9C2DoPXh6IUxNJ5Uey26oFP/3I6uqa4/lOIP/rRhoLHyTBbyUos/VoV9S3w8oGsfWeR9hJsXucTjgFSmyShCX6b/3n03yv+1OX6OSWAicOAjWkhv3XAw2Ri/3mDte9Lx/LKe+EynlVfRKKG+LJCNEc9ZdG04iBcF8eo4DJdUfcdKwmdg3mix4FT3dNlr5QmQ67gag4n4l4CcYPMK5h15+KLWoLWDtBj+Ma/h6yyHXF4V2rSN3DyNP91trfz0vdvzhW/R9L1bqA=="
+        POSTGRES_PASSWORD: "AgB/SyDfSmp3so+L0H26Z0wCpLVSXWkoEa6i9x/Lx6tz4UFYTBW8ZVYD02/Osy+Cisa+GqJGB8umty71dwsmjgDWPwVieJnlCQnt6iKEx3gCmqBd4jXnzWsoSS88A+Jjgq8iEAp0VECRqb9IwtS5g5hWDjz/t6eRcvDSvpKk7HhFcOhBexnELgxqpVwALb9iLP/MdUe3h4HAr+JB76AqkwQD4zxHMfHh2H+hmukxPokKyiVjiPVcOBRbnxi0e58qf2CWIrd3p/KNN3OdEvQo/otHs948V/QTwYaN0DqwwcpgkXTcF8R+d17B2ku31lEeKBxEy1MKydP50eR65+GFj3jJXkdPcaK2Gl3MwDk3NccIW+F1d1wzID6RM8h41REqb1gC4luGaKRquBadiSLINbO49ReeMkdmPrcK5zDHrHkOzlA/2BCGE1G/dGzk0tv+z68ykr/rgmdR/l0VYLkKqF+2BydVuHt7rW82wmh+FL931qy2aI0iozdlLN/7EOSl3dddgn5EO9TpkLmh6BVF2gzdHL2xFGPIL/wnCX341UVzqCseCYL0xhk8cFWiu2OiUQO7BPsaZS0YE80Lo5Yi41dtaqpNUnVFSTxPKkoKYUSZ+5BTCnJeMhWQYkEpKyiZq3+QoFqLH8aMAyqqlYqJDMabNzzGu0p+PDFOCwHpGoDNLmBdlG8WC5+N85ES+j8YFwP3P4Em3f3VOg=="
       plain:
         POSTGRES_HOST: "postgres"
         POSTGRES_PORT: 5432
