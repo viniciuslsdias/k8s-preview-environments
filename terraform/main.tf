@@ -7,9 +7,38 @@ resource "helm_release" "argocd" {
 
   create_namespace = true
 
-  #  values = [
-  #    file("values.yaml")
-  #  ]
+  set {
+    name  = "server.ingress.enabled"
+    value = "true"
+  }
+
+  set {
+    name  = "server.ingress.ingressClassName"
+    value = "nginx"
+  }
+
+  set {
+    name  = "server.ingress.hostname"
+    value = "argocd.preview.cloud4devs.com.br"
+  }
+
+  set {
+    name  = "configs.params.server\\.insecure"
+    value = "true"
+  }
+
+}
+
+# To reuse my existing Sealed Secrets key, I need to create the namespace and the Kubernetes secrets before installing the Sealed Secrets Helm chart
+resource "kubernetes_manifest" "sealed_secrets_namespace" {
+  manifest = yamldecode(file("${path.module}/sealed-secrets-namespace.yaml"))
+}
+
+resource "kubernetes_manifest" "sealed_secrets_key" {
+  manifest = yamldecode(file("${path.module}/sealed-secrets-key.yaml"))
+    depends_on = [
+    kubernetes_manifest.sealed_secrets_namespace
+  ]
 }
 
 resource "helm_release" "sealed_secrets" {
@@ -21,9 +50,15 @@ resource "helm_release" "sealed_secrets" {
 
   create_namespace = true
 
-  #  values = [
-  #    file("values.yaml")
-  #  ]
+  set {
+    name  = "secretName"
+    value = "sealed-secrets-key"
+  }
+
+  depends_on = [
+    kubernetes_manifest.sealed_secrets_key
+  ]
+
 }
 
 resource "helm_release" "ingress_nginx" {
