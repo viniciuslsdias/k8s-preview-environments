@@ -9,11 +9,11 @@ imagePullSecrets:
 
 env:
   sealed:
-    POSTGRES_PASSWORD: "AgB/SyDfSmp3so+L0H26Z0wCpLVSXWkoEa6i9x/Lx6tz4UFYTBW8ZVYD02/Osy+Cisa+GqJGB8umty71dwsmjgDWPwVieJnlCQnt6iKEx3gCmqBd4jXnzWsoSS88A+Jjgq8iEAp0VECRqb9IwtS5g5hWDjz/t6eRcvDSvpKk7HhFcOhBexnELgxqpVwALb9iLP/MdUe3h4HAr+JB76AqkwQD4zxHMfHh2H+hmukxPokKyiVjiPVcOBRbnxi0e58qf2CWIrd3p/KNN3OdEvQo/otHs948V/QTwYaN0DqwwcpgkXTcF8R+d17B2ku31lEeKBxEy1MKydP50eR65+GFj3jJXkdPcaK2Gl3MwDk3NccIW+F1d1wzID6RM8h41REqb1gC4luGaKRquBadiSLINbO49ReeMkdmPrcK5zDHrHkOzlA/2BCGE1G/dGzk0tv+z68ykr/rgmdR/l0VYLkKqF+2BydVuHt7rW82wmh+FL931qy2aI0iozdlLN/7EOSl3dddgn5EO9TpkLmh6BVF2gzdHL2xFGPIL/wnCX341UVzqCseCYL0xhk8cFWiu2OiUQO7BPsaZS0YE80Lo5Yi41dtaqpNUnVFSTxPKkoKYUSZ+5BTCnJeMhWQYkEpKyiZq3+QoFqLH8aMAyqqlYqJDMabNzzGu0p+PDFOCwHpGoDNLmBdlG8WC5+N85ES+j8YFwP3P4Em3f3VOg=="
+    POSTGRES_PASSWORD: "AgCjApQ2sXtsEaRlUutU4+D+dSdjgGpAN4+PtcuKnt3KkLuWHHMe4wvbwaJCEd6BGmh2DjT/jlTlSzTUDq48/04tG69uAA0v+C1TqswfcCt9LzrKXzCOvl/nVs95zBi+Qz001QJkEN0zAC7u23Py7smf1t/y12lVeyHDJAwXvumzzGljaA+ruZI2PBKdS9MuKPHd/ZmzAdlkgbTJnaeFqN+rUHGEmEI3iiZdCvT5CGKlmTpGAM1un/9MZY+x/PhLLUNjVG0+uaNOq+1nH4Mnl+fcK6eN3YBoqDB/UVGE4xWVDLNE86cNqTtP82PLLFpGPVw54bNdIVPVKzUqZjAEFtxhAhr+RnZSJi7M567doMnGt0HMzxzBPkAiXHWaz4+qlHYMhxh+vea43vaQ5QqzFYm+TOB0nlU1tWZWMiAd0Rl7GL7LQggMT3tM89wwMGihHJigDfn6JfKZyAIiy/tEQ2AacsfhFSFquybAFhnkC1S24u/ttm2TaxbfBRTeqk8gHmB9vzFwxrn1ADi+lzquYUzULuUe2gQXhmszM3M7sQHq2S/DvphJM1aC51ENjn2/KivhHOlyj6/aReLBJ6fe9d/WV1TSbuEpLKzynMMhNWG1lFPMC0KGBH0jOOb4inNEnKTfGBOi2YnN7DpmOi0wC94ipPB5MvdDhZMQ46NFYGddbXlayNNqcOSH+7Z22EtI0b1+Ptoy1k7Grg=="
   plain:
-    POSTGRES_HOST: "postgres"
+    POSTGRES_HOST: "support-portal.c5eyxlfftafx.us-east-1.rds.amazonaws.com"
     POSTGRES_PORT: 5432
-    POSTGRES_DATABASE: "support-portal"
+    POSTGRES_DATABASE: "supportportal"
     POSTGRES_USERNAME: "postgres"
 
 hookJobs:
@@ -39,11 +39,11 @@ hookJobs:
         "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
         "helm.sh/hook-weight": "1"
       sealed:
-        POSTGRES_PASSWORD: "AgB/SyDfSmp3so+L0H26Z0wCpLVSXWkoEa6i9x/Lx6tz4UFYTBW8ZVYD02/Osy+Cisa+GqJGB8umty71dwsmjgDWPwVieJnlCQnt6iKEx3gCmqBd4jXnzWsoSS88A+Jjgq8iEAp0VECRqb9IwtS5g5hWDjz/t6eRcvDSvpKk7HhFcOhBexnELgxqpVwALb9iLP/MdUe3h4HAr+JB76AqkwQD4zxHMfHh2H+hmukxPokKyiVjiPVcOBRbnxi0e58qf2CWIrd3p/KNN3OdEvQo/otHs948V/QTwYaN0DqwwcpgkXTcF8R+d17B2ku31lEeKBxEy1MKydP50eR65+GFj3jJXkdPcaK2Gl3MwDk3NccIW+F1d1wzID6RM8h41REqb1gC4luGaKRquBadiSLINbO49ReeMkdmPrcK5zDHrHkOzlA/2BCGE1G/dGzk0tv+z68ykr/rgmdR/l0VYLkKqF+2BydVuHt7rW82wmh+FL931qy2aI0iozdlLN/7EOSl3dddgn5EO9TpkLmh6BVF2gzdHL2xFGPIL/wnCX341UVzqCseCYL0xhk8cFWiu2OiUQO7BPsaZS0YE80Lo5Yi41dtaqpNUnVFSTxPKkoKYUSZ+5BTCnJeMhWQYkEpKyiZq3+QoFqLH8aMAyqqlYqJDMabNzzGu0p+PDFOCwHpGoDNLmBdlG8WC5+N85ES+j8YFwP3P4Em3f3VOg=="
+        POSTGRES_PASSWORD: "AgCjApQ2sXtsEaRlUutU4+D+dSdjgGpAN4+PtcuKnt3KkLuWHHMe4wvbwaJCEd6BGmh2DjT/jlTlSzTUDq48/04tG69uAA0v+C1TqswfcCt9LzrKXzCOvl/nVs95zBi+Qz001QJkEN0zAC7u23Py7smf1t/y12lVeyHDJAwXvumzzGljaA+ruZI2PBKdS9MuKPHd/ZmzAdlkgbTJnaeFqN+rUHGEmEI3iiZdCvT5CGKlmTpGAM1un/9MZY+x/PhLLUNjVG0+uaNOq+1nH4Mnl+fcK6eN3YBoqDB/UVGE4xWVDLNE86cNqTtP82PLLFpGPVw54bNdIVPVKzUqZjAEFtxhAhr+RnZSJi7M567doMnGt0HMzxzBPkAiXHWaz4+qlHYMhxh+vea43vaQ5QqzFYm+TOB0nlU1tWZWMiAd0Rl7GL7LQggMT3tM89wwMGihHJigDfn6JfKZyAIiy/tEQ2AacsfhFSFquybAFhnkC1S24u/ttm2TaxbfBRTeqk8gHmB9vzFwxrn1ADi+lzquYUzULuUe2gQXhmszM3M7sQHq2S/DvphJM1aC51ENjn2/KivhHOlyj6/aReLBJ6fe9d/WV1TSbuEpLKzynMMhNWG1lFPMC0KGBH0jOOb4inNEnKTfGBOi2YnN7DpmOi0wC94ipPB5MvdDhZMQ46NFYGddbXlayNNqcOSH+7Z22EtI0b1+Ptoy1k7Grg=="
       plain:
-        POSTGRES_HOST: "postgres"
+        POSTGRES_HOST: "support-portal.c5eyxlfftafx.us-east-1.rds.amazonaws.com"
         POSTGRES_PORT: 5432
-        POSTGRES_DATABASE: "support-portal"
+        POSTGRES_DATABASE: "supportportal"
         POSTGRES_USERNAME: "postgres"
   - name: "db-template"
     annotations:
@@ -65,11 +65,11 @@ hookJobs:
         "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
         "helm.sh/hook-weight": "-2"
       sealed:
-        POSTGRES_PASSWORD: "AgB/SyDfSmp3so+L0H26Z0wCpLVSXWkoEa6i9x/Lx6tz4UFYTBW8ZVYD02/Osy+Cisa+GqJGB8umty71dwsmjgDWPwVieJnlCQnt6iKEx3gCmqBd4jXnzWsoSS88A+Jjgq8iEAp0VECRqb9IwtS5g5hWDjz/t6eRcvDSvpKk7HhFcOhBexnELgxqpVwALb9iLP/MdUe3h4HAr+JB76AqkwQD4zxHMfHh2H+hmukxPokKyiVjiPVcOBRbnxi0e58qf2CWIrd3p/KNN3OdEvQo/otHs948V/QTwYaN0DqwwcpgkXTcF8R+d17B2ku31lEeKBxEy1MKydP50eR65+GFj3jJXkdPcaK2Gl3MwDk3NccIW+F1d1wzID6RM8h41REqb1gC4luGaKRquBadiSLINbO49ReeMkdmPrcK5zDHrHkOzlA/2BCGE1G/dGzk0tv+z68ykr/rgmdR/l0VYLkKqF+2BydVuHt7rW82wmh+FL931qy2aI0iozdlLN/7EOSl3dddgn5EO9TpkLmh6BVF2gzdHL2xFGPIL/wnCX341UVzqCseCYL0xhk8cFWiu2OiUQO7BPsaZS0YE80Lo5Yi41dtaqpNUnVFSTxPKkoKYUSZ+5BTCnJeMhWQYkEpKyiZq3+QoFqLH8aMAyqqlYqJDMabNzzGu0p+PDFOCwHpGoDNLmBdlG8WC5+N85ES+j8YFwP3P4Em3f3VOg=="
+        POSTGRES_PASSWORD: "AgCjApQ2sXtsEaRlUutU4+D+dSdjgGpAN4+PtcuKnt3KkLuWHHMe4wvbwaJCEd6BGmh2DjT/jlTlSzTUDq48/04tG69uAA0v+C1TqswfcCt9LzrKXzCOvl/nVs95zBi+Qz001QJkEN0zAC7u23Py7smf1t/y12lVeyHDJAwXvumzzGljaA+ruZI2PBKdS9MuKPHd/ZmzAdlkgbTJnaeFqN+rUHGEmEI3iiZdCvT5CGKlmTpGAM1un/9MZY+x/PhLLUNjVG0+uaNOq+1nH4Mnl+fcK6eN3YBoqDB/UVGE4xWVDLNE86cNqTtP82PLLFpGPVw54bNdIVPVKzUqZjAEFtxhAhr+RnZSJi7M567doMnGt0HMzxzBPkAiXHWaz4+qlHYMhxh+vea43vaQ5QqzFYm+TOB0nlU1tWZWMiAd0Rl7GL7LQggMT3tM89wwMGihHJigDfn6JfKZyAIiy/tEQ2AacsfhFSFquybAFhnkC1S24u/ttm2TaxbfBRTeqk8gHmB9vzFwxrn1ADi+lzquYUzULuUe2gQXhmszM3M7sQHq2S/DvphJM1aC51ENjn2/KivhHOlyj6/aReLBJ6fe9d/WV1TSbuEpLKzynMMhNWG1lFPMC0KGBH0jOOb4inNEnKTfGBOi2YnN7DpmOi0wC94ipPB5MvdDhZMQ46NFYGddbXlayNNqcOSH+7Z22EtI0b1+Ptoy1k7Grg=="
       plain:
         POSTGRES_HOST: "postgres"
         POSTGRES_PORT: 5432
-        POSTGRES_DATABASE: "support-portal"
+        POSTGRES_DATABASE: "supportportal"
         POSTGRES_USERNAME: "postgres"
 
 livenessProbe:
@@ -81,3 +81,19 @@ readinessProbe:
   httpGet:
     path: /
     port: 8080
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+  protocol: TCP
+  name: http
+
+ingress:
+  enabled: true
+  className: "nginx"
+  hosts:
+    - host: support-portal.preview.cloud4devs.com.br
+      paths:
+        - path: /
+          pathType: Prefix
