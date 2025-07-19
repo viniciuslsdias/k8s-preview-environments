@@ -26,6 +26,79 @@ resource "helm_release" "sealed_secrets" {
   #  ]
 }
 
+resource "helm_release" "ingress_nginx" {
+  name       = "ingress-nginx"
+  namespace  = "ingress-nginx"
+  repository = "https://kubernetes.github.io/ingress-nginx"
+  chart      = "ingress-nginx"
+  version    = "4.13.0"
+
+  create_namespace = true
+
+  set {
+    name  = "controller.service.type"
+    value = "LoadBalancer"
+  }
+
+  set {
+    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type"
+    value = "nlb"
+  }
+
+  set {
+    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-scheme"
+    value = "internet-facing"
+  }
+
+  set {
+    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-ssl-cert"
+    value = aws_acm_certificate.preview_wildcard.arn
+  }
+
+  set {
+    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-backend-protocol"
+    value = "tcp"
+  }
+
+  set {
+    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-ssl-ports"
+    value = "443"
+  }
+
+  set {
+    name  = "controller.service.targetPorts.https"
+    value = "http"
+  }
+
+  set {
+    name  = "controller.service.targetPorts.http"
+    value = "8080"
+  }
+
+  set {
+    name  = "controller.config.http-snippet"
+    value = <<-EOF
+      server {
+        listen 8080;
+        return 308 https://$host$request_uri;
+      }
+    EOF
+
+
+  }
+
+  set {
+    name  = "controller.config.proxy-real-ip-cidr"
+    value = local.vpc_cidr
+  }
+
+  set {
+    name  = "controller.config.use-forwarded-headers"
+    value = "true"
+  }
+
+}
+
 resource "aws_iam_openid_connect_provider" "github" {
   url = "https://token.actions.githubusercontent.com"
 
@@ -91,4 +164,13 @@ resource "aws_iam_role_policy" "ecr_policy" {
 
 resource "aws_ecr_repository" "support_portal" {
   name = "support-portal"
+}
+
+resource "aws_acm_certificate" "preview_wildcard" {
+  domain_name       = "*.preview.cloud4devs.com.br"
+  validation_method = "DNS"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
