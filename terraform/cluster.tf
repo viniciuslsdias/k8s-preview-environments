@@ -30,16 +30,28 @@ locals {
 ################################################################################
 
 module "eks" {
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-eks.git?ref=v20.37.2"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-eks.git?ref=v21.0.7"
 
-  cluster_name                   = local.name
-  cluster_version                = local.cluster_version
-  cluster_endpoint_public_access = true
+  name                   = local.name
+  kubernetes_version     = local.cluster_version
+  endpoint_public_access = true
 
   enable_cluster_creator_admin_permissions = true
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
+
+  # EKS Addons
+  addons = {
+    coredns = {}
+    eks-pod-identity-agent = {
+      before_compute = true
+    }
+    kube-proxy = {}
+    vpc-cni = {
+      before_compute = true
+    }
+  }
 
   eks_managed_node_groups = {
     nodes = {
@@ -87,10 +99,16 @@ module "eks" {
   tags = local.tags
 }
 
-module "disabled_eks" {
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-eks.git?ref=v20.37.2"
+data "aws_eks_cluster_auth" "this" {
+  name       = module.eks.cluster_name
+  depends_on = [module.eks]
+}
 
-  create = false
+resource "null_resource" "run_local_eks_auth" {
+
+  provisioner "local-exec" {
+    command = "aws eks update-kubeconfig --name ${local.name} --region ${local.region}"
+  }
 }
 
 ################################################################################
@@ -99,7 +117,7 @@ module "disabled_eks" {
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 5.0"
+  version = "~> 6.0"
 
   name = local.name
   cidr = local.vpc_cidr

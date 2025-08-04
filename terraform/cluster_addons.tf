@@ -16,6 +16,10 @@ module "eks_blueprints_addons" {
         name  = "replicaCount"
         value = 1
       },
+      {
+        name  = "vpcId"
+        value = module.vpc.vpc_id
+      }
     ]
   }
 

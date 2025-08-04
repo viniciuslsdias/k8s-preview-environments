@@ -31,12 +31,13 @@ resource "helm_release" "argocd" {
 
 # To reuse my existing Sealed Secrets key, I need to create the namespace and the Kubernetes secrets before installing the Sealed Secrets Helm chart
 resource "kubernetes_manifest" "sealed_secrets_namespace" {
-  manifest = yamldecode(file("${path.module}/sealed-secrets-namespace.yaml"))
+  manifest   = yamldecode(file("${path.module}/sealed-secrets-namespace.yaml"))
+  depends_on = [module.eks]
 }
 
 resource "kubernetes_manifest" "sealed_secrets_key" {
   manifest = yamldecode(file("${path.module}/sealed-secrets-key.yaml"))
-    depends_on = [
+  depends_on = [
     kubernetes_manifest.sealed_secrets_namespace
   ]
 }
@@ -204,8 +205,22 @@ resource "aws_ecr_repository" "support_portal" {
 resource "aws_acm_certificate" "preview_wildcard" {
   domain_name       = "*.preview.cloud4devs.com.br"
   validation_method = "DNS"
+}
 
-  lifecycle {
-    prevent_destroy = true
+data "aws_caller_identity" "current" {}
+
+module "iam_eks_role" {
+  source    = "git::https://github.com/terraform-aws-modules/terraform-aws-iam.git//modules/iam-role-for-service-accounts-eks?ref=v5.59.0"
+  role_name = "preview-environment-job"
+
+  role_policy_arns = {
+    policy = "arn:aws:iam::aws:policy/AmazonRDSFullAccess"
+  }
+
+  oidc_providers = {
+    one = {
+      provider_arn               = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${module.eks.oidc_provider}"
+      namespace_service_accounts = ["preview-environment-job"]
+    }
   }
 }
