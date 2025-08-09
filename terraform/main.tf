@@ -211,7 +211,7 @@ data "aws_caller_identity" "current" {}
 
 module "iam_eks_role" {
   source    = "git::https://github.com/terraform-aws-modules/terraform-aws-iam.git//modules/iam-role-for-service-accounts-eks?ref=v5.59.0"
-  role_name = "preview-environment-job"
+  role_name = "hook-preview-db"
 
   role_policy_arns = {
     policy = "arn:aws:iam::aws:policy/AmazonRDSFullAccess"
@@ -220,7 +220,9 @@ module "iam_eks_role" {
   oidc_providers = {
     one = {
       provider_arn               = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${module.eks.oidc_provider}"
-      namespace_service_accounts = ["preview-environment-job"]
+      namespace_service_accounts = ["*:hook-preview-db"]
     }
   }
+
+  assume_role_condition_test = "StringLike"
 }
