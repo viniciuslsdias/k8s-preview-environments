@@ -14,7 +14,7 @@ env:
     POSTGRES_HOST: "support-portal.c5eyxlfftafx.us-east-1.rds.amazonaws.com"
     POSTGRES_PORT: 5432
     POSTGRES_DATABASE: "supportportal"
-    POSTGRES_USERNAME: "postgres"
+    POSTGRES_USERNAME: "supportportal"
 
 hookJobs:
   - name: "migrations"
@@ -48,41 +48,41 @@ hookJobs:
         POSTGRES_PORT: 5432
         POSTGRES_DATABASE: "supportportal"
         POSTGRES_USERNAME: "supportportal"
-  - name: "preview-db"
-    annotations:
-      "helm.sh/hook": pre-install
-      "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
-      "helm.sh/hook-weight": "-1"
-    image:
-      repository: python
-      tag: "3.9.23"
-    backoffLimit: 0
-    command: ["/bin/bash", "-c"]
-    args:
-      - |
-        pip install boto3
-        wget https://raw.githubusercontent.com/viniciuslsdias/k8s-preview-environments/main/scripts/snapshot_and_restore_rds.py
-        python snapshot_and_restore_rds.py $POSTGRES_HOST preview us-east-1
-    serviceAccount:
-      enabled: true
-      annotations:
-        eks.amazonaws.com/role-arn: arn:aws:iam::194302643587:role/hook-preview-db
-        "helm.sh/hook": pre-install
-        "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
-        "helm.sh/hook-weight": "-3"
-    env:
-      annotations:
-        sealedsecrets.bitnami.com/cluster-wide: "true"
-        "helm.sh/hook": pre-install
-        "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
-        "helm.sh/hook-weight": "-2"
-      sealed:
-        POSTGRES_PASSWORD: "AgCjApQ2sXtsEaRlUutU4+D+dSdjgGpAN4+PtcuKnt3KkLuWHHMe4wvbwaJCEd6BGmh2DjT/jlTlSzTUDq48/04tG69uAA0v+C1TqswfcCt9LzrKXzCOvl/nVs95zBi+Qz001QJkEN0zAC7u23Py7smf1t/y12lVeyHDJAwXvumzzGljaA+ruZI2PBKdS9MuKPHd/ZmzAdlkgbTJnaeFqN+rUHGEmEI3iiZdCvT5CGKlmTpGAM1un/9MZY+x/PhLLUNjVG0+uaNOq+1nH4Mnl+fcK6eN3YBoqDB/UVGE4xWVDLNE86cNqTtP82PLLFpGPVw54bNdIVPVKzUqZjAEFtxhAhr+RnZSJi7M567doMnGt0HMzxzBPkAiXHWaz4+qlHYMhxh+vea43vaQ5QqzFYm+TOB0nlU1tWZWMiAd0Rl7GL7LQggMT3tM89wwMGihHJigDfn6JfKZyAIiy/tEQ2AacsfhFSFquybAFhnkC1S24u/ttm2TaxbfBRTeqk8gHmB9vzFwxrn1ADi+lzquYUzULuUe2gQXhmszM3M7sQHq2S/DvphJM1aC51ENjn2/KivhHOlyj6/aReLBJ6fe9d/WV1TSbuEpLKzynMMhNWG1lFPMC0KGBH0jOOb4inNEnKTfGBOi2YnN7DpmOi0wC94ipPB5MvdDhZMQ46NFYGddbXlayNNqcOSH+7Z22EtI0b1+Ptoy1k7Grg=="
-      plain:
-        POSTGRES_HOST: "support-portal.c5eyxlfftafx.us-east-1.rds.amazonaws.com"
-        POSTGRES_PORT: 5432
-        POSTGRES_DATABASE: "supportportal"
-        POSTGRES_USERNAME: "supportportal"
+  # - name: "preview-db"
+  #   annotations:
+  #     "helm.sh/hook": pre-install
+  #     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+  #     "helm.sh/hook-weight": "-1"
+  #   image:
+  #     repository: python
+  #     tag: "3.9.23"
+  #   backoffLimit: 0
+  #   command: ["/bin/bash", "-c"]
+  #   args:
+  #     - |
+  #       pip install boto3
+  #       wget https://raw.githubusercontent.com/viniciuslsdias/k8s-preview-environments/main/scripts/snapshot_and_restore_rds.py
+  #       python snapshot_and_restore_rds.py $POSTGRES_HOST preview us-east-1
+  #   serviceAccount:
+  #     enabled: true
+  #     annotations:
+  #       eks.amazonaws.com/role-arn: arn:aws:iam::194302643587:role/hook-preview-db
+  #       "helm.sh/hook": pre-install
+  #       "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+  #       "helm.sh/hook-weight": "-3"
+  #   env:
+  #     annotations:
+  #       sealedsecrets.bitnami.com/cluster-wide: "true"
+  #       "helm.sh/hook": pre-install
+  #       "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+  #       "helm.sh/hook-weight": "-2"
+  #     sealed:
+  #       POSTGRES_PASSWORD: "AgCjApQ2sXtsEaRlUutU4+D+dSdjgGpAN4+PtcuKnt3KkLuWHHMe4wvbwaJCEd6BGmh2DjT/jlTlSzTUDq48/04tG69uAA0v+C1TqswfcCt9LzrKXzCOvl/nVs95zBi+Qz001QJkEN0zAC7u23Py7smf1t/y12lVeyHDJAwXvumzzGljaA+ruZI2PBKdS9MuKPHd/ZmzAdlkgbTJnaeFqN+rUHGEmEI3iiZdCvT5CGKlmTpGAM1un/9MZY+x/PhLLUNjVG0+uaNOq+1nH4Mnl+fcK6eN3YBoqDB/UVGE4xWVDLNE86cNqTtP82PLLFpGPVw54bNdIVPVKzUqZjAEFtxhAhr+RnZSJi7M567doMnGt0HMzxzBPkAiXHWaz4+qlHYMhxh+vea43vaQ5QqzFYm+TOB0nlU1tWZWMiAd0Rl7GL7LQggMT3tM89wwMGihHJigDfn6JfKZyAIiy/tEQ2AacsfhFSFquybAFhnkC1S24u/ttm2TaxbfBRTeqk8gHmB9vzFwxrn1ADi+lzquYUzULuUe2gQXhmszM3M7sQHq2S/DvphJM1aC51ENjn2/KivhHOlyj6/aReLBJ6fe9d/WV1TSbuEpLKzynMMhNWG1lFPMC0KGBH0jOOb4inNEnKTfGBOi2YnN7DpmOi0wC94ipPB5MvdDhZMQ46NFYGddbXlayNNqcOSH+7Z22EtI0b1+Ptoy1k7Grg=="
+  #     plain:
+  #       POSTGRES_HOST: "support-portal.c5eyxlfftafx.us-east-1.rds.amazonaws.com"
+  #       POSTGRES_PORT: 5432
+  #       POSTGRES_DATABASE: "supportportal"
+  #       POSTGRES_USERNAME: "supportportal"
 
 livenessProbe:
   httpGet:
