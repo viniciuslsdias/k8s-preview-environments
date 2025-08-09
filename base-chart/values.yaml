@@ -98,7 +98,7 @@ env:
   sealed: {}
   plain: {}
 
-hookJobs: {}
+hookJobs: []
   # - name: ""
   #   annotations: {}
   #   image:
@@ -108,6 +108,9 @@ hookJobs: {}
   #   backoffLimit: 0
   #   command: []
   #   args: []
+  #   serviceAccount:
+  #     enabled: false
+  #     annotations: {}
   #   env:
   #     annotations: {}
   #     sealed: {}
