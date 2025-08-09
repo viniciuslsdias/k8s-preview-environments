@@ -28,6 +28,7 @@ module "db" {
   # DB option group
   major_engine_version = "14"
 
+  skip_final_snapshot = true
 
 }
 
