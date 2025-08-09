@@ -32,6 +32,9 @@ hookJobs:
     args:
       - >
         migrate -path=/migrations/ -database postgres://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}?sslmode=disable up
+    serviceAccount:
+      enabled: false
+      annotations: {}
     env:
       annotations:
         sealedsecrets.bitnami.com/cluster-wide: "true"
@@ -45,7 +48,7 @@ hookJobs:
         POSTGRES_PORT: 5432
         POSTGRES_DATABASE: "supportportal"
         POSTGRES_USERNAME: "supportportal"
-  - name: "db-template"
+  - name: "preview-db"
     annotations:
       "helm.sh/hook": pre-install
       "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
@@ -59,7 +62,14 @@ hookJobs:
       - |
         pip install boto3
         wget https://raw.githubusercontent.com/viniciuslsdias/k8s-preview-environments/main/scripts/snapshot_and_restore_rds.py
-        python snapshot_and_restore_rds.py $POSTGRES_HOST <new-db-name> us-east-1
+        python snapshot_and_restore_rds.py $POSTGRES_HOST preview us-east-1
+    serviceAccount:
+      enabled: true
+      annotations:
+        eks.amazonaws.com/role-arn: arn:aws:iam::194302643587:role/hook-preview-db
+        "helm.sh/hook": pre-install
+        "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+        "helm.sh/hook-weight": "-3"
     env:
       annotations:
         sealedsecrets.bitnami.com/cluster-wide: "true"
