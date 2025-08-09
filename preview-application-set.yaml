@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: preview
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - pullRequest:
+      github:
+        # The GitHub organization or user.
+        owner: viniciuslsdias
+        # The Github repository
+        repo: support-portal
+      requeueAfterSeconds: 60
+  template:
+    metadata:
+      name: 'support-portal-preview-{{.number}}'
+      namespace: argocd
+    spec:
+      project: 'default'
+      sources:
+        - chart: base-chart
+          helm:
+            valueFiles: 
+              - $values/continuous-delivery/support-portal/values.yaml
+          repoURL: '194302643587.dkr.ecr.us-east-1.amazonaws.com' 
+          targetRevision: 0.1.0
+        - ref: values 
+          repoURL: 'https://github.com/viniciuslsdias/k8s-preview-environments'
+          targetRevision: main
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'support-portal-preview-{{.number}}'
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
